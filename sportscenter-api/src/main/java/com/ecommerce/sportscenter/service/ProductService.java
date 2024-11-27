@@ -1,13 +1,13 @@
 package com.ecommerce.sportscenter.service;
 
 import com.ecommerce.sportscenter.model.ProductResponse;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface ProductService {
 
     ProductResponse getProductById(Integer productId);
 
-    List<ProductResponse> getAllProducts();
+    Page<ProductResponse> getProducts(Pageable pageable, Integer brandId, Integer typeId, String keyword);
 
 }
