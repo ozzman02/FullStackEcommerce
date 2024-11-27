@@ -56,3 +56,30 @@ Then you can run the project by typing:
 ```sh
 npm start
 ```
+
+## Material UI
+
+```sh
+npm install @mui/material @emotion/react @emotion/styled
+```
+
+### Roboto Font
+
+```sh
+npm install @fontsource/roboto
+```
+
+Add the following imports into main.tsx:
+
+```sh
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+```
+
+### Icons
+
+```sh
+npm install @mui/icons-material
+```
