@@ -18,7 +18,10 @@ function App() {
   function handleThemeChange() {
     setDarkMode(!darkMode);
   };
-
+  
+  /* 
+     Check zIndex comment on Header.tsx.
+  */
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

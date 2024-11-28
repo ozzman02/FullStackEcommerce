@@ -83,3 +83,10 @@ import '@fontsource/roboto/700.css';
 ```sh
 npm install @mui/icons-material
 ```
+
+### React Router
+
+```sh
+npm install react-router-dom
+npm install react-router-dom@6
+```
