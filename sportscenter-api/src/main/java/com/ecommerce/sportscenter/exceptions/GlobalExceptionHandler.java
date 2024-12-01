@@ -21,4 +21,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(BasketNotFoundException.class)
+    public ResponseEntity<?> productNotFoundExceptionHandler(BasketNotFoundException exception, WebRequest webRequest) {
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .status(HttpStatus.NOT_FOUND)
+                .error("Basket does not exist")
+                .message(exception.getMessage())
+                .build();
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
 }
