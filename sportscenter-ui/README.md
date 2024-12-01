@@ -90,3 +90,27 @@ npm install @mui/icons-material
 npm install react-router-dom
 npm install react-router-dom@6
 ```
+
+### Axios
+
+```sh
+npm install axios
+```
+
+### React Toastify
+
+```sh
+npm install react-toastify
+```
+
+### React Redux
+
+```sh
+npm install redux react-redux
+```
+
+### Redux Toolkit
+
+```sh
+npm install @reduxjs/toolkit
+```

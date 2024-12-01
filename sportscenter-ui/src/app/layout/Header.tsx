@@ -61,7 +61,7 @@ export default function Header({ darkMode, handleThemeChange }: Props) {
                     </IconButton>
                     <List sx={{ display: "flex" }}>
                         {accountLinks.map(({ title, path }) => (
-                            <ListItem component={NavLink} to={path} sx={navStyles}>
+                            <ListItem component={NavLink} to={path} key={path} sx={navStyles}>
                                 {title}
                             </ListItem>
                         ))}

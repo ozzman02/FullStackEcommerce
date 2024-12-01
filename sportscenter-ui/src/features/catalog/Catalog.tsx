@@ -1,34 +1,25 @@
 import { useEffect, useState } from "react"
 import { Product } from "../../app/models/product"
 import ProductList from "./ProductList";
+import agent from "../../app/api/agent";
+import Spinner from "../../app/layout/Spinner";
 
 export default function Catalog() {
 
     const [products, setProducts] = useState<Product[]>([]);
 
-    useEffect(() => {
-        fetch('http://localhost:8081/api/products')
-          .then(response => response.json())
-          .then(data => setProducts(data.content));
-    }, []);
+    const [loading, setLoading] = useState(true);
 
-    /*
-        useEffect(() => {
-            const fetchData = async () => {
-                try {
-                    const response = await fetch('http://localhost:8081/api/products');
-                    if (!response.ok) {
-                        throw new Error('Failed to fetch the data');
-                    }
-                    const data = await response.json();
-                    setProducts(data.content);
-                } catch (error) {
-                    console.error('Error fetching data: ', error);
-                }
-            };
-            fetchData();
-        }, []);
-    */
+    useEffect(() => {
+        agent.ApiStore.list()
+            .then((products) => setProducts(products.content))
+            .catch((error) => console.error(error))
+            .finally(() => setLoading(false));
+    }, [])
+
+    if (!products) return <h3>Unable to load products</h3>
+
+    if (loading) return <Spinner message="Loading Products..." />
 
     return (
         <>
