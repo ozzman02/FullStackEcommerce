@@ -1,6 +1,8 @@
 import { ShoppingCart } from "@mui/icons-material";
 import { AppBar, Badge, Box, IconButton, List, ListItem, Switch, Toolbar, Typography } from "@mui/material";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import { useAppSelector } from "../store/configureStore";
+import { useEffect } from "react";
 
 const navLinks = [
     { title: 'Home', path: '/' },
@@ -35,7 +37,16 @@ interface Props {
     padding was also applied in the main container on App.tsx: sx={{ paddingTop: "64px" }}  
 */
 export default function Header({ darkMode, handleThemeChange }: Props) {
-    return(
+
+    const { basket } = useAppSelector(state => state.basket);
+    
+    const itemCount = basket?.items?.reduce((sum, item) => sum + item.quantity, 0) || 0;
+
+    useEffect(() => {
+        
+    }, [basket]);
+
+    return (
         <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
             <Toolbar sx={{ 
                 display:"flex", 
@@ -54,8 +65,8 @@ export default function Header({ darkMode, handleThemeChange }: Props) {
                     ))}
                 </List>
                 <Box display="flex" alignItems="center">
-                    <IconButton size="large" edge="start" color="inherit" sx={{ mr: 2 }}>
-                        <Badge badgeContent="4" color="secondary">
+                    <IconButton component={Link} to='/basket' size="large" edge="start" color="inherit" sx={{ mr: 2 }}>
+                        <Badge badgeContent={itemCount} color="secondary">
                             <ShoppingCart />
                         </Badge>
                     </IconButton>
@@ -69,5 +80,5 @@ export default function Header({ darkMode, handleThemeChange }: Props) {
                 </Box>
             </Toolbar>
         </AppBar>
-    )
+    );
 }

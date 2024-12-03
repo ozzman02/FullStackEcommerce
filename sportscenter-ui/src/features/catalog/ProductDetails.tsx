@@ -18,7 +18,7 @@ export default function ProductDetails() {
 
 
     useEffect(() => {
-        id && agent.ApiStore.details(parseInt(id))
+        id && agent.ProductsApi.details(parseInt(id))
             .then(response => setProduct(response))
             .catch(error => console.error(error))
             .finally(() => setLoading(false));   

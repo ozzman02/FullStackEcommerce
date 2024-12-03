@@ -1,6 +1,11 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { router } from "../router/Routes";
 import { toast } from "react-toastify";
+import basketService from "./basketService";
+import { Product } from "../models/product";
+import { Dispatch } from "redux";
+import { Basket } from "../models/basket";
+
 
 axios.defaults.baseURL = 'http://localhost:8081/api/';
 
@@ -38,13 +43,86 @@ const requests = {
     delete: (url: string) => axios.delete(url).then(responseBody)
 };
 
-const ApiStore = {
-    list: () => requests.get('products'),
-    details: (id: number) => requests.get(`products/${id}`)
+const ProductsApi = {
+    apiUrl: 'http://localhost:8081/api/products',
+    list:(page: number, size: number, brandId?: number, typeId?: number, url?: string) => {
+        let requestUrl = url || `products?page=${page - 1}&size=${size}`;
+        if (brandId !== undefined) {
+          requestUrl += `&brandId=${brandId}`;
+        }
+        if (typeId !==undefined) {
+          requestUrl += `&typeId=${typeId}`;
+        }
+        return requests.get(requestUrl);
+    },
+    details: (id: number) => requests.get(`products/${id}`),
+    types: () => requests.get('products/types').then(types => [{ id: 0, name: 'All'}, ...types]),
+    brands: () => requests.get('products/brands').then(brands => [{ id: 0, name: 'All'}, ...brands]),
+    search: (keyword: string) => requests.get(`products?keyword=${keyword}`)
+};
+
+const BasketApi = {
+    get: async() => {
+        try {
+            return await basketService.getBasket();
+        } catch (error) {
+            console.error("Failed to get basket: " + error);
+            throw error;
+        }
+    },
+    addItem: async (product: Product, dispatch: Dispatch) => {
+        try {
+            return await basketService.addItemToBasket(product, 1, dispatch);
+        } catch (error) {
+            console.error("Failed to add new item to basket: " + error);
+            throw error;
+        }
+    },
+    removeItem: async (itemId: number, dispatch: Dispatch) => {
+        try {
+            return await basketService.remove(itemId, dispatch);
+        } catch (error) {
+            console.error("Failed to remove item from basket: " + error);
+            throw error;
+        }
+    },
+    incrementItemQuantity: async (itemId: number, quantity: number = 1, dispatch: Dispatch) => {
+        try {
+          await basketService.incrementItemQuantity(itemId, quantity, dispatch);
+        } catch (error) {
+          console.error("Failed to increment item quantity in basket:", error);
+          throw error;
+        }
+    },
+    decrementItemQuantity: async (itemId: number, quantity: number = 1, dispatch: Dispatch) => {
+        try {
+          await basketService.decrementItemQuantity(itemId, quantity, dispatch);
+        } catch (error) {
+          console.error("Failed to decrement item quantity in basket:", error);
+          throw error;
+        }
+    },
+    setBasket: async (basket: Basket, dispatch: Dispatch) => {
+        try {
+          await basketService.setBasket(basket, dispatch);
+        } catch (error) {
+          console.error("Failed to set basket:", error);
+          throw error;
+        }
+    },
+    deleteBasket: async(basketId: string) => {
+        try{
+          await basketService.deleteBasket(basketId);
+        } catch(error){
+          console.log("Failed to delete the Basket");
+          throw error;
+        }
+    } 
 };
 
 const agent = {
-    ApiStore
+    ProductsApi,
+    BasketApi
 };
 
 export default agent;

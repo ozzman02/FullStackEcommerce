@@ -63,6 +63,12 @@ npm start
 npm install @mui/material @emotion/react @emotion/styled
 ```
 
+## Material UI Lab
+
+```sh
+npm install @mui/lab
+```
+
 ### Roboto Font
 
 ```sh
@@ -113,4 +119,10 @@ npm install redux react-redux
 
 ```sh
 npm install @reduxjs/toolkit
+```
+
+### Cuid2
+
+```sh
+npm install @paralleldrive/cuid2
 ```
