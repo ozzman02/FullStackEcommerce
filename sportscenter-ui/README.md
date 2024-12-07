@@ -4,19 +4,13 @@
 
 ```sh
 npm create vite@latest
-```
 
 Choose React -> Typescript + SWC
 
-```sh
 cd project folder
-```
 
-```sh
 npm install
-```
 
-```sh
 npm run dev
 ```
 

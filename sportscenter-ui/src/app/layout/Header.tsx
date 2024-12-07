@@ -43,7 +43,7 @@ export default function Header({ darkMode, handleThemeChange }: Props) {
     const itemCount = basket?.items?.reduce((sum, item) => sum + item.quantity, 0) || 0;
 
     useEffect(() => {
-        
+        console.log('Basket Items:', basket?.items);
     }, [basket]);
 
     return (
