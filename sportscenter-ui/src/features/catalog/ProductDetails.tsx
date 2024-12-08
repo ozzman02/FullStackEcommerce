@@ -3,7 +3,7 @@ import { Divider, Grid2, Table, TableBody, TableCell, TableContainer, TableRow, 
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Product } from "../../app/models/product";
-import { extractImageName, formatPrice } from "../../app/util/Util";
+import { extractImageName, formatPrice } from "../../app/util/util";
 import agent from "../../app/api/agent";
 import NotFound from "../../app/errors/NotFound";
 import Spinner from "../../app/layout/Spinner";

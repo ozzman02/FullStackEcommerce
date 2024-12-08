@@ -1,6 +1,6 @@
 import { Box, Typography, TableContainer, Paper, Table, TableBody, TableRow, TableCell } from "@mui/material";
 import { useAppSelector } from "../../app/store/configureStore";
-import { formatPrice } from "../../app/util/Util";
+import { formatPrice } from "../../app/util/util";
 
 export default function BasketSummary() {
     

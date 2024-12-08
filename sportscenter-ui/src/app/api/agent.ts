@@ -5,6 +5,7 @@ import basketService from "./basketService";
 import { Product } from "../models/product";
 import { Dispatch } from "redux";
 import { Basket } from "../models/basket";
+import { FieldValues } from "react-hook-form";
 
 
 axios.defaults.baseURL = 'http://localhost:8081/api/';
@@ -120,9 +121,15 @@ const BasketApi = {
     } 
 };
 
+const AccountApi = {
+    login: (values: FieldValues) => requests.post('auth/login', values)
+}
+
+
 const agent = {
     ProductsApi,
-    BasketApi
+    BasketApi,
+    AccountApi
 };
 
 export default agent;

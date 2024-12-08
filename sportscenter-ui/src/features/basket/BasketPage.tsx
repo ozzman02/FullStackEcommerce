@@ -2,7 +2,7 @@ import { Box, Button, IconButton, Table, TableBody, TableCell, TableContainer, T
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import agent from "../../app/api/agent";
-import { extractImageName, formatPrice } from "../../app/util/Util";
+import { extractImageName, formatPrice } from "../../app/util/util";
 import { Add, Remove } from "@mui/icons-material";
 import BasketSummary from "./BasketSummary";
 import { Link } from "react-router-dom";

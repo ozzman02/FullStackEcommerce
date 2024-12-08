@@ -1,7 +1,7 @@
 import { Avatar, Button, Card, CardActions, CardContent, CardHeader, CardMedia, CircularProgress, Typography } from "@mui/material";
 import { Product } from "../../app/models/product";
 import { Link } from "react-router-dom";
-import { extractImageName, formatPrice } from "../../app/util/Util";
+import { extractImageName, formatPrice } from "../../app/util/util";
 import { useState } from "react";
 import { useAppDispatch } from "../../app/store/configureStore";
 import agent from "../../app/api/agent";
