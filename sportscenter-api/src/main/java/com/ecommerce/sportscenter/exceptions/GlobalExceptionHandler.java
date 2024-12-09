@@ -31,4 +31,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(OrderNotFoundException.class)
+    public ResponseEntity<?> productNotFoundExceptionHandler(OrderNotFoundException exception, WebRequest webRequest) {
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .status(HttpStatus.NOT_FOUND)
+                .error("Order does not exist")
+                .message(exception.getMessage())
+                .build();
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
 }
