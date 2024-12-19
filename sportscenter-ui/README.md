@@ -126,3 +126,9 @@ npm install @paralleldrive/cuid2
 ```sh
 npm install yup
 ```
+
+### Resolvers
+
+```sh
+npm install @hookform/resolvers
+```

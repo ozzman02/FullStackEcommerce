@@ -30,7 +30,7 @@ public class Order {
     @Column(name = "Order_Date")
     private LocalDateTime orderDate = LocalDateTime.now();
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "order")
     private List<OrderItem> orderItems;
 
     @Column(name = "Sub_Total")
