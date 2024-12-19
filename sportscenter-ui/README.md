@@ -120,3 +120,9 @@ npm install @reduxjs/toolkit
 ```sh
 npm install @paralleldrive/cuid2
 ```
+
+### Yup
+
+```sh
+npm install yup
+```

@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { Product } from "../../app/models/product";
 import { Brand } from "../../app/models/brand";
 import { Type } from "../../app/models/type";
@@ -40,7 +40,8 @@ export default function Catalog() {
     
     const pageSize = 10;
 
-    const loadProducts = (selectedSort: string, searchKeyword: string = '') => {
+
+    const loadProductsV2 = useCallback(async (selectedSort: string, searchKeyword: string = '') => {
         setLoading(true);
         const page = currentPage - 1;
         const size = pageSize;
@@ -79,7 +80,48 @@ export default function Catalog() {
             .catch((error) => console.error(error))
             .finally(() => setLoading(false));
         }
-    };
+    }, [selectedBrandId, selectedTypeId, currentPage])
+
+    /*const loadProducts = (selectedSort: string, searchKeyword: string = '') => {
+        setLoading(true);
+        const page = currentPage - 1;
+        const size = pageSize;
+        const brandId = selectedBrandId !== 0 ? selectedBrandId : undefined;
+        const typeId = selectedTypeId !== 0 ? selectedTypeId : undefined;
+        const sort = "name";
+        const order = selectedSort === "desc" ? "desc" : "asc"; 
+
+        //construct the url
+        let url = `${agent.ProductsApi.apiUrl}?sort=${sort}&order=${order}`;
+        
+        if (brandId !== undefined || typeId !== undefined) {
+          url += '&';
+          if (brandId !== undefined) url += `brandId=${brandId}&`;
+          if (typeId !== undefined) url += `typeId=${typeId}&`;
+          //Remove trailing &
+          url = url.replace(/&$/, "");
+        }
+        
+        //Make the API request with the url
+        if (searchKeyword){
+          console.log(searchKeyword);
+          agent.ProductsApi.search(searchKeyword)
+            .then((productsRes) => {
+              setProducts(productsRes.content);
+              setTotalItems(productsRes.length);
+            })
+            .catch((error) => console.error(error))
+            .finally(() => setLoading(false));
+        } else {
+          agent.ProductsApi.list(page, size, undefined, undefined, url)
+            .then((productsRes) => {
+              setProducts(productsRes.content);
+              setTotalItems(productsRes.totalElements);
+            })
+            .catch((error) => console.error(error))
+            .finally(() => setLoading(false));
+        }
+    };*/
 
     useEffect(() => {
         Promise.all([
@@ -96,15 +138,22 @@ export default function Catalog() {
         .finally(() => setLoading(false));
     }, [currentPage, pageSize]);
 
+
     //Trigger loadProducts wheneever selectedBrandId or selectedTypeId changes
-    useEffect(() => {
+    /*useEffect(() => {
         loadProducts(selectedSort);
-    }, [selectedBrandId, selectedTypeId]);
+    }, [selectedBrandId, selectedTypeId]);*/
+
+    useEffect(() => {
+        loadProductsV2(selectedSort)
+    }, [loadProductsV2, selectedSort]);
+
 
     const handleSortChange = (event: ChangeEvent<HTMLInputElement>): void => {
         const selectedSort = event.target.value;
         setSelectedSort(selectedSort); 
-        loadProducts(selectedSort);
+        //loadProducts(selectedSort);
+        loadProductsV2(selectedSort);
     };
 
     const handleBrandChange = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -113,7 +162,8 @@ export default function Catalog() {
         setSelectedBrand(selectedBrand)
         if (brand){
           setSelectedBrandId(brand.id); 
-          loadProducts(selectedSort);
+          //loadProducts(selectedSort);
+          loadProductsV2(selectedSort);
         }    
     };
 
@@ -123,7 +173,8 @@ export default function Catalog() {
         setSelectedType(selectedType)
         if (type){
           setSelectedTypeId(type.id); 
-          loadProducts(selectedSort);
+          //loadProducts(selectedSort);
+          loadProductsV2(selectedSort);
         }    
     };
 
@@ -160,7 +211,8 @@ export default function Catalog() {
                         onKeyDown={(e) => {
                             if (e.key === 'Enter') {
                                 // Trigger search action
-                                loadProducts(selectedSort, searchTerm); // Pass the search term to loadProducts
+                                //loadProducts(selectedSort, searchTerm); // Pass the search term to loadProducts
+                                loadProductsV2(selectedSort, searchTerm);
                             }
                         }}
                     />
